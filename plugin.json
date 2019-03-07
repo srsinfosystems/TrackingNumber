@@ -1,0 +1,8 @@
+{
+      "name":"TrackingNumber",
+      "description":"My first plugin",
+      "namespace":"TrackingNumber",
+      "author":"Christian Moll",
+      "type":"template",
+      "serviceProvider":"TrackingNumber\\Providers\\TrackingNumberServiceProvider"
+}
