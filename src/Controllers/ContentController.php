@@ -157,7 +157,7 @@ class ContentController extends Controller
 		  return "cURL Error #:" . $err;
 		} else {
 
-		  $this->UpdateStatus($orderId);
+		  //$this->UpdateStatus($orderId);
 
 		}
 	}
