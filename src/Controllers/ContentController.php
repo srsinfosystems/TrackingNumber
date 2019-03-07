@@ -8,6 +8,7 @@ use Plenty\Plugin\Templates\Twig;
  * Class ContentController
  * @package TrackingNumber\Controllers
  */
+
 class ContentController extends Controller
 {
 
@@ -84,7 +85,8 @@ class ContentController extends Controller
           return $data;
 		}
 	}
-	public function orderStatusOrderId($orderId, $orderNumber){
+	public function orderStatusOrderId($orderId, $orderNumber)
+	{
 
 		$curl = curl_init();
 
@@ -126,7 +128,8 @@ class ContentController extends Controller
 
 		}
 
-	public function shippingPackage($orderId, $trackNo){
+	public function shippingPackage($orderId, $trackNo)
+	{
 		$curl = curl_init();
 
 		curl_setopt_array($curl, array(
