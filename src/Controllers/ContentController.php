@@ -22,7 +22,7 @@ class ContentController extends Controller
 	public function order_tracking_number()
 	{
 		$host = $_SERVER['HTTP_HOST'];
-		$login = $this->login($host);
+		$login = $this->login();
 		$login = json_decode($login, true);
 		$this->access_token = $login['access_token'];
 		$this->plentyhost = "https://".$host;
@@ -199,15 +199,16 @@ class ContentController extends Controller
           CURLOPT_RETURNTRANSFER => true,
           CURLOPT_ENCODING => "",
           CURLOPT_MAXREDIRS => 10,
-          #CURLOPT_TIMEOUT=> 90000000,
+          //CURLOPT_TIMEOUT => 30,
           CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
           CURLOPT_CUSTOMREQUEST => "POST",
           CURLOPT_POSTFIELDS => "username=API-USER&password=%5BnWu%3Bx%3E8Eny%3BbSs%40",
           CURLOPT_HTTPHEADER => array(
             "cache-control: no-cache",
             "content-type: application/x-www-form-urlencoded",
+            "postman-token: 49a8d541-073c-8569-b3c3-76319f67e552"
           ),
-		  CURLOPT_TIMEOUT=> 90000000,
+          CURLOPT_TIMEOUT=> 90000000
         ));
 
         $response = curl_exec($curl);
