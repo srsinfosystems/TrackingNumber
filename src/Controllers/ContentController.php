@@ -29,7 +29,7 @@ class ContentController extends Controller
 		$this->drophost = "https://www.brandsdistribution.com";
 
 		$orderNumbers = $this->getOrdersNumber();
-		echo json_encode($orderNumbers);
+
 		$TrackingNumber= array();
 		foreach ($orderNumbers as $orderNumber) {
 			if (!empty($orderNumber['order']['orderNumber'])) {
@@ -114,10 +114,10 @@ class ContentController extends Controller
 		} else {
 		  $xml = simplexml_load_string($response);
 			$json = json_encode($xml);
-			echo $json;
+
 			$arrayData = json_decode($json,TRUE);
-			$arrayData['order_list']['order']['status'] = "3002";
-			$arrayData['order_list']['order']['tracking_url'] = "http://www.dhl.com/content/g0/en/express/tracking.shtml?AWB=0123456789012&brand=DHL";
+			//$arrayData['order_list']['order']['status'] = "3002";
+			//$arrayData['order_list']['order']['tracking_url'] = "http://www.dhl.com/content/g0/en/express/tracking.shtml?AWB=0123456789012&brand=DHL";
 			if ($arrayData['order_list']['order']['status'] == '3002' && isset($arrayData['order_list']['order']['tracking_url']))
 				$trackingNum = $arrayData['order_list']['order']['tracking_url'];
 				$trackingNum = explode('?', $trackingNum);
@@ -156,7 +156,7 @@ class ContentController extends Controller
 		if ($err) {
 		  return "cURL Error #:" . $err;
 		} else {
-			echo $response;
+
 		  $this->UpdateStatus($orderId);
 
 		}
@@ -188,7 +188,7 @@ class ContentController extends Controller
 	    if ($err) {
 	      return "cURL Error #:" . $err;
 	    } else {
-	      echo $response;
+	      //echo $response;
 	    }
   	}
 	public function login(){
