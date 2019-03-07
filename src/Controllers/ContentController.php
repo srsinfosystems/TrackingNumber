@@ -28,18 +28,16 @@ class ContentController extends Controller
 		$this->drophost = "https://www.brandsdistribution.com";
 
 		$orderNumbers = $this->getOrdersNumber();
+		echo json_encode($orderNumbers);
 		$TrackingNumber= array();
 		foreach ($orderNumbers as $orderNumber) {
 			if (!empty($orderNumber['order']['orderNumber'])) {
 				$orderId = $orderNumber['order']['id'];
 				$orderNumber = $orderNumber['order']['orderNumber'];
-				$TrackingNumber[] = $this->orderStatusOrderId($orderId, $orderNumber);
+				$this->orderStatusOrderId($orderId, $orderNumber);
 			}
 		}
-		/
-		if(!empty($TrackingNumber)){
-			//echo "Success";
-		}
+
 		//return $twig->render('TrackingNumber::content.order_tracking_number');
 	}
 	public function getOrdersNumber(){
@@ -114,6 +112,7 @@ class ContentController extends Controller
 		} else {
 		  $xml = simplexml_load_string($response);
 			$json = json_encode($xml);
+			echo $json;
 			$arrayData = json_decode($json,TRUE);
 			$arrayData['order_list']['order']['status'] = "3002";
 			$arrayData['order_list']['order']['tracking_url'] = "http://www.dhl.com/content/g0/en/express/tracking.shtml?AWB=0123456789012&brand=DHL";
@@ -124,7 +123,7 @@ class ContentController extends Controller
 				$storeTrackingNo = $this->shippingPackage($orderId, $track);
 			}
 
-		  return $storeTrackingNo;
+
 		}
 	}
 	public function shippingPackage($orderId, $trackNo){
@@ -154,8 +153,9 @@ class ContentController extends Controller
 		if ($err) {
 		  return "cURL Error #:" . $err;
 		} else {
+			echo $response;
 		  $this->UpdateStatus($orderId);
-		  return json_decode($response, TRUE);
+
 		}
 	}
 	public function UpdateStatus($orderId){
@@ -185,7 +185,7 @@ class ContentController extends Controller
 	    if ($err) {
 	      return "cURL Error #:" . $err;
 	    } else {
-	      return $response;
+	      echo $response;
 	    }
   	}
 	public function login(){
