@@ -125,7 +125,7 @@ class ContentController extends Controller
 
 
 		}
-	}
+
 	public function shippingPackage($orderId, $trackNo){
 		$curl = curl_init();
 
@@ -220,3 +220,4 @@ class ContentController extends Controller
         }
     }
 }
+
