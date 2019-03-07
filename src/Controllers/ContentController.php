@@ -18,7 +18,7 @@ class ContentController extends Controller
 	 * @param Twig $twig
 	 * @return string
 	 */
-	public function order_tracking_number(Twig $twig):string
+	public function order_tracking_number()
 	{
 		$host = $_SERVER['HTTP_HOST'];
 		$login = $this->login($host);
@@ -34,11 +34,11 @@ class ContentController extends Controller
 				$orderId = $orderNumber['order']['id'];
 				$orderNumber = $orderNumber['order']['orderNumber'];
 				$TrackingNumber[] = $this->orderStatusOrderId($orderId, $orderNumber);
-			}		
+			}
 		}
+		/
 		if(!empty($TrackingNumber)){
-			echo "Success";
-			print_r($TrackingNumber);
+			//echo "Success";
 		}
 		//return $twig->render('TrackingNumber::content.order_tracking_number');
 	}
@@ -73,15 +73,15 @@ class ContentController extends Controller
           $i=0;
           foreach ($response['entries'] as $order) {
       		foreach ($order['properties'] as $property) {
-      			if ($property['typeId'] == 15) {
-      				 
-      				$data[$i]['order']['id'] = $order['id'];
-      				$data[$i]['order']['orderNumber'] = $property['value']; 
+      			if ($property['typeId'] == 7) {
 
-      				$i++;	
-      			}      			
+      				$data[$i]['order']['id'] = $order['id'];
+      				$data[$i]['order']['orderNumber'] = $property['value'];
+
+      				$i++;
+      			}
       		}
-          		
+
           }
           return $data;
 		}
@@ -112,16 +112,17 @@ class ContentController extends Controller
 		if ($err) {
 		  return "cURL Error #:" . $err;
 		} else {
-		  $xml = simplexml_load_string($response); 
+		  $xml = simplexml_load_string($response);
 			$json = json_encode($xml);
-			$arrayData = json_decode($json,TRUE); 
-			
-			//if (!empty($arrayData['order_list']['order']['tracking_url'])) {
-				$trackingNum = "http://www.dhl.com/content/g0/en/express/tracking.shtml?AWB=0123456789012&brand=DHL";
-				$trackingNum = explode('?', $trackingNum);	
+			$arrayData = json_decode($json,TRUE);
+			$arrayData['order_list']['order']['status'] = "3002";
+			$arrayData['order_list']['order']['tracking_url'] = "http://www.dhl.com/content/g0/en/express/tracking.shtml?AWB=0123456789012&brand=DHL";
+			if ($arrayData['order_list']['order']['status'] == '3002' && isset($arrayData['order_list']['order']['tracking_url']))
+				$trackingNum = $arrayData['order_list']['order']['tracking_url'];
+				$trackingNum = explode('?', $trackingNum);
 	 			$track = substr($trackingNum[1],4, 13);
 				$storeTrackingNo = $this->shippingPackage($orderId, $track);
-			//}
+			}
 
 		  return $storeTrackingNo;
 		}
@@ -153,7 +154,7 @@ class ContentController extends Controller
 		if ($err) {
 		  return "cURL Error #:" . $err;
 		} else {
-			$this->UpdateStatus($orderId);
+		  $this->UpdateStatus($orderId);
 		  return json_decode($response, TRUE);
 		}
 	}
@@ -204,7 +205,7 @@ class ContentController extends Controller
             "content-type: application/x-www-form-urlencoded",
             "postman-token: 49a8d541-073c-8569-b3c3-76319f67e552"
           )
-          
+
         ));
 
         $response = curl_exec($curl);

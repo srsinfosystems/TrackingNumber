@@ -1,8 +1,8 @@
 {
       "name":"TrackingNumber",
-      "description":"My first plugin",
+      "description":"Get Tracking number from brand distribution",
       "namespace":"TrackingNumber",
-      "author":"Christian Moll",
-      "type":"template",
+      "author":"Arun Singh",
+      "type":"service",
       "serviceProvider":"TrackingNumber\\Providers\\TrackingNumberServiceProvider"
 }

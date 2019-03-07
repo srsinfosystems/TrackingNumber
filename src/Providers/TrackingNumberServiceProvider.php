@@ -2,6 +2,8 @@
 namespace TrackingNumber\Providers;
 
 use Plenty\Plugin\ServiceProvider;
+use Plenty\Modules\Cron\Services\CronContainer;
+use TrackingNumber\Crons\TrackingNumberCron;
 
 /**
  * Class TrackingNumberServiceProvider
@@ -10,6 +12,9 @@ use Plenty\Plugin\ServiceProvider;
 class TrackingNumberServiceProvider extends ServiceProvider
 {
 
+	public function boot(CronContainer $container) {
+		$container->add(CronContainer::EVERY_FIFTEEN_MINUTES, TrackingNumberCron::class);
+	}
 	/**
 	 * Register the service provider.
 	 */
