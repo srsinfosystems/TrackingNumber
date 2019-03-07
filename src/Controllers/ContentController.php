@@ -36,8 +36,11 @@ class ContentController extends Controller
 				$TrackingNumber[] = $this->orderStatusOrderId($orderId, $orderNumber);
 			}		
 		}
-		
-		return $twig->render('TrackingNumber::content.order_tracking_number');
+		if(!empty($TrackingNumber)){
+			echo "Success";
+			print_r($TrackingNumber);
+		}
+		//return $twig->render('TrackingNumber::content.order_tracking_number');
 	}
 	public function getOrdersNumber(){
 
