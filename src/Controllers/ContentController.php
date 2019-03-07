@@ -137,10 +137,10 @@ class ContentController extends Controller
 		  CURLOPT_RETURNTRANSFER => true,
 		  CURLOPT_ENCODING => "",
 		  CURLOPT_MAXREDIRS => 10,
-		  CURLOPT_TIMEOUT => 30,
+		  CURLOPT_TIMEOUT => 900000,
 		  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
 		  CURLOPT_CUSTOMREQUEST => "POST",
-		  CURLOPT_POSTFIELDS => "\n{\n    \"packageId\": 3,\n    \"packageNumber\": \"$trackNo\",\n    \"packageType\": 15\n}",
+		  CURLOPT_POSTFIELDS => "{\n    \"packageId\": 3,\n    \"packageNumber\": \"$trackNo\",\n    \"packageType\": 15\n}",
 		  CURLOPT_HTTPHEADER => array(
 		    "authorization: Bearer ".$this->access_token,
 		    "cache-control: no-cache",
@@ -169,7 +169,7 @@ class ContentController extends Controller
 	      CURLOPT_RETURNTRANSFER => true,
 	      CURLOPT_ENCODING => "",
 	      CURLOPT_MAXREDIRS => 10,
-	      CURLOPT_TIMEOUT => 30,
+	      CURLOPT_TIMEOUT => 90000,
 	      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
 	      CURLOPT_CUSTOMREQUEST => "PUT",
 	      CURLOPT_POSTFIELDS => "{\n\t\"plentyId\": 42296,\n\t\"statusId\":7\n}",
@@ -207,7 +207,7 @@ class ContentController extends Controller
             "cache-control: no-cache",
             "content-type: application/x-www-form-urlencoded",
             "postman-token: 49a8d541-073c-8569-b3c3-76319f67e552"
-          )
+          ),
 
         ));
 
