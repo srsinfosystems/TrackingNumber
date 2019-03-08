@@ -3,6 +3,6 @@
       "description":"Get Tracking number from brand distribution",
       "namespace":"TrackingNumber",
       "author":"Arun Singh",
-      "type":"service",
+      "type":"cron",
       "serviceProvider":"TrackingNumber\\Providers\\TrackingNumberServiceProvider"
 }
