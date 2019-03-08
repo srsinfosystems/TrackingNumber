@@ -21,8 +21,8 @@ class ContentController extends Controller
 	 */
 	public function order_tracking_number()
 	{
-		$host = $_SERVER['HTTP_HOST'];
-		$login = $this->login();
+		$host = "joiurjeuiklb.plentymarkets-cloud02.com";
+		$login = $this->login($host);
 		$login = json_decode($login, true);
 		$this->access_token = $login['access_token'];
 		$this->plentyhost = "https://".$host;
@@ -191,8 +191,8 @@ class ContentController extends Controller
 	      //echo $response;
 	    }
   	}
-	public function login(){
-        $host = $_SERVER['HTTP_HOST'];
+	public function login($host){
+
         $curl = curl_init();
         curl_setopt_array($curl, array(
           CURLOPT_URL => "https://".$host."/rest/login",
