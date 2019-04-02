@@ -15,7 +15,7 @@ class TrackingNumberRouteServiceProvider extends RouteServiceProvider
 	 */
 	public function map(Router $router)
 	{
-		$router->get('order_tracking_number', 'TrackingNumber\Controllers\ContentController@order_tracking_number');
+		$router->get('order_tracking_number', 'TrackingNumber\Controllers\ContentController@cgi_order_tracking_number');
 	}
 
 }

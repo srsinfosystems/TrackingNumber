@@ -19,6 +19,20 @@ class ContentController extends Controller
 	 * @param Twig $twig
 	 * @return string
 	 */
+	public function cgi_order_tracking_number()
+	{
+		$order_number = $_GET['order'];
+		$host = "joiurjeuiklb.plentymarkets-cloud02.com";
+		$login = $this->login($host);
+		$login = json_decode($login, true);
+		$this->access_token = $login['access_token'];
+		$this->plentyhost = "https://".$host;
+		$this->drophost = "https://www.brandsdistribution.com";
+
+		$this->orderStatusOrderId($order_number, $order_number);
+
+		//return $twig->render('TrackingNumber::content.order_tracking_number');
+	}
 	public function order_tracking_number()
 	{
 		$host = "joiurjeuiklb.plentymarkets-cloud02.com";
