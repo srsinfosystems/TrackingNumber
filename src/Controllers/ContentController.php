@@ -71,17 +71,15 @@ class ContentController extends Controller
           $data = array();
           $i=0;
           foreach ($response['entries'] as $order) {
-      		foreach ($order['properties'] as $property) {
-      			if ($property['typeId'] == 7) {
+			  if(isset($order['relations'][0]['referenceId'])
+				&& $order['relations'][0]['referenceId'] == "104") {
 
-      				$data[$i]['order']['id'] = $order['id'];
-      				$data[$i]['order']['orderNumber'] = $property['value'];
-
-      				$i++;
-      			}
-      		}
+				$data[$i]['order']['id'] = $order['id'];
+      			$data[$i]['order']['orderNumber'] = $order['id'];
+      			$i++;
 
           }
+		}
           return $data;
 		}
 	}
@@ -91,7 +89,7 @@ class ContentController extends Controller
 		$curl = curl_init();
 
 		curl_setopt_array($curl, array(
-		  CURLOPT_URL => $this->drophost."/restful/ghost/clientorders/serverkey/".$orderNumber,
+		  CURLOPT_URL => $this->drophost."/restful/ghost/clientorders/clientkey/".$orderNumber."/",
 		  CURLOPT_RETURNTRANSFER => true,
 		  CURLOPT_ENCODING => "",
 		  CURLOPT_MAXREDIRS => 10,
@@ -112,17 +110,15 @@ class ContentController extends Controller
 		if ($err) {
 		  return "cURL Error #:" . $err;
 		} else {
-		  $xml = simplexml_load_string($response);
+			$xml = simplexml_load_string($response);
 			$json = json_encode($xml);
-
+			$tracking = "";
 			$arrayData = json_decode($json,TRUE);
-			//$arrayData['order_list']['order']['status'] = "3002";
-			//$arrayData['order_list']['order']['tracking_url'] = "http://www.dhl.com/content/g0/en/express/tracking.shtml?AWB=0123456789012&brand=DHL";
-			if ($arrayData['order_list']['order']['status'] == '3002' && isset($arrayData['order_list']['order']['tracking_url']))
-				$trackingNum = $arrayData['order_list']['order']['tracking_url'];
-				$trackingNum = explode('?', $trackingNum);
-	 			$track = substr($trackingNum[1],4, 13);
-				$storeTrackingNo = $this->shippingPackage($orderId, $track);
+			if (isset($arrayData['order_list']['order']['tracking_code'])) {
+				$tracking = $arrayData['order_list']['order']['tracking_code'];
+			}
+				if(!empty($tracking))
+				$storeTrackingNo = $this->shippingPackage($orderId, $tracking);
 			}
 
 
